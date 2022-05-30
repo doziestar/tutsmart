@@ -1,12 +1,12 @@
-import Sequelize from 'sequelize';
-import { NODE_ENV, DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } from '@config';
+import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER, NODE_ENV } from '@config';
 import UserModel from '@models/users.model';
 import { logger } from '@utils/logger';
+import Sequelize from 'sequelize';
 
 const sequelize = new Sequelize.Sequelize(DB_DATABASE, DB_USER, DB_PASSWORD, {
-  dialect: 'mysql',
+  dialect: 'postgres',
   host: DB_HOST,
-  port: DB_PORT,
+  port: parseInt(DB_PORT, 10),
   timezone: '+09:00',
   define: {
     charset: 'utf8mb4',
