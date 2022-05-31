@@ -1,9 +1,9 @@
-import { User } from '@interfaces/users.interface';
+import { IUser } from '@interfaces/users.interface';
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-export type UserCreationAttributes = Optional<User, 'id' | 'email' | 'password'>;
+export type UserCreationAttributes = Optional<IUser, 'id' | 'email' | 'password'>;
 
-export class UserModel extends Model<User, UserCreationAttributes> implements User {
+export class UserModel extends Model<IUser, UserCreationAttributes> implements IUser {
   public firstName: string;
   public lastName: string;
   public identityNumber: string;
@@ -38,10 +38,24 @@ export default function (sequelize: Sequelize): typeof UserModel {
         allowNull: false,
         type: DataTypes.STRING(255),
       },
+      firstName: {
+        allowNull: false,
+        type: DataTypes.STRING(45),
+      },
+      lastName: {
+        allowNull: false,
+        type: DataTypes.STRING(45),
+      },
+      identityNumber: {
+        allowNull: false,
+        type: DataTypes.STRING(45),
+      },
     },
     {
       tableName: 'users',
       sequelize,
+      timestamps: true,
+      paranoid: true,
     },
   );
 

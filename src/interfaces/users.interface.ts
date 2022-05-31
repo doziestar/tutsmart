@@ -1,13 +1,11 @@
-export interface User {
+export interface IUser {
   id: number;
   email: string;
   firstName: string;
   lastName: string;
   identityNumber: string;
   password: string;
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
 
-  generateIdentityNumber(): Promise<string>;
-  checkFraudScore(): Promise<number>;
+  generateIdentityNumber?(): Promise<string>;
+  checkFraudScore?(): Promise<number>;
 }
