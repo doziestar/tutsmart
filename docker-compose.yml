@@ -35,7 +35,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: 918273645dozie
       POSTGRES_DB: tutis
     ports:
       - '5432:5432'
