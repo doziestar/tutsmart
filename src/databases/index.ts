@@ -1,3 +1,4 @@
+import APIModel from '@/models/api.model';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER, NODE_ENV } from '@config';
 import UserModel from '@models/users.model';
 import { logger } from '@utils/logger';
@@ -36,6 +37,7 @@ sequelize
 
 const DB = {
   Users: UserModel(sequelize),
+  APIKeys: APIModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

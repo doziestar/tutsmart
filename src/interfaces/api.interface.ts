@@ -1,7 +1,9 @@
 export interface IAPIData {
+  id: string;
   apiKey: string;
   apiSecret: string;
+  userId: string;
 
-  generateAPIData(): Promise<object>;
-  checkAPIData(): Promise<boolean>;
+  generateAPIData(): Promise<void>;
+  checkAPIData(key: string, secret: string): Promise<boolean>;
 }

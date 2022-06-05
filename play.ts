@@ -1,8 +1,10 @@
-const { randomBytes } = require('crypto');
+import Coinkey from 'coinkey';
 
-const uid = Math.random().toString(36).slice(2) + randomBytes(8).toString('hex') + new Date().getTime();
-console.log(uid);
-
-// get random 8 numbers from uid output
-const random = uid.substring(2, 10);
-console.log(random);
+const Wallet = new Coinkey.createRandom();
+console.log(Wallet.privateWif);
+console.log(Wallet.publicAddress);
+console.log(Wallet.publicKey);
+console.log(Wallet.privateKey);
+console.log(Wallet.publicKey.toString('hex'));
+console.log(Wallet.privateKey.toString('hex'));
+console.log(Wallet.publicKey.toString('hex'));
