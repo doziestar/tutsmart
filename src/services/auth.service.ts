@@ -63,17 +63,17 @@ class AuthService {
   }
 
   public accessToken(user: IUser): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: user.id };
+    const expiresIn: number = 60 * 60 * 24;
+    const dataStoredInToken: DataStoredInToken = { id: user.id, expiresIn: expiresIn };
     const secretKey: string = SECRET_KEY;
-    const expiresIn: number = 60 * 60;
 
     return { expiresIn, token: sign(dataStoredInToken, secretKey, { expiresIn }) };
   }
 
   public refreshToken(user: IUser): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: user.id };
-    const secretKey: string = SECRET_KEY;
     const expiresIn: number = 60 * 60 * 24 * 7;
+    const dataStoredInToken: DataStoredInToken = { id: user.id, expiresIn: expiresIn };
+    const secretKey: string = SECRET_KEY;
     return { expiresIn, token: sign(dataStoredInToken, secretKey, { expiresIn }) };
   }
 

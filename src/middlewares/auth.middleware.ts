@@ -1,9 +1,9 @@
-import { NextFunction, Response } from 'express';
-import { verify } from 'jsonwebtoken';
 import { SECRET_KEY } from '@config';
 import DB from '@databases';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, RequestWithUser } from '@interfaces/auth.interface';
+import { NextFunction, Response } from 'express';
+import { verify } from 'jsonwebtoken';
 
 const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFunction) => {
   try {
@@ -14,6 +14,13 @@ const authMiddleware = async (req: RequestWithUser, res: Response, next: NextFun
       const verificationResponse = verify(Authorization, secretKey) as DataStoredInToken;
       const userId = verificationResponse.id;
       const findUser = await DB.Users.findByPk(userId);
+
+      // get expireDate from token and compare it with current date
+      const expireDate = new Date(verificationResponse.expiresIn * 1000);
+      const currentDate = new Date();
+      if (currentDate > expireDate) {
+        throw new HttpException(401, 'Token expired');
+      }
 
       if (findUser) {
         req.user = findUser;

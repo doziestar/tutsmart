@@ -3,6 +3,7 @@ import { Request } from 'express';
 
 export interface DataStoredInToken {
   id: number;
+  expiresIn: number;
 }
 
 export interface TokenData {
