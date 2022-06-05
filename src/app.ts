@@ -45,7 +45,7 @@ class App {
 
   private connectToDatabase() {
     DB.sequelize
-      .sync({ force: false })
+      .sync({ alter: NODE_ENV === 'development' })
       .then(() => {
         logger.info('Connection has been established successfully.');
       })
@@ -67,7 +67,7 @@ class App {
 
   private initializeRoutes(routes: Routes[]) {
     routes.forEach(route => {
-      this.app.use('/', route.router);
+      this.app.use('/api/v1', route.router);
     });
   }
 
