@@ -6,4 +6,5 @@ export interface IAPIData {
 
   generateAPIData(): Promise<void>;
   checkAPIData(key: string, secret: string): Promise<boolean>;
+  revokeAPIData(): Promise<void>;
 }

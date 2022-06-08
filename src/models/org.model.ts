@@ -22,6 +22,13 @@ class Organization extends Model implements IOrganizationWithAPIKey {
   public async generateAPIData(): Promise<void> {
     this.apiKey = await this.generateAPIKey();
     this.apiSecret = await this.generateAPISecret();
+    await this.save();
+  }
+
+  public async revokeAPIData(): Promise<void> {
+    this.apiKey = null;
+    this.apiSecret = null;
+    await this.save();
   }
 
   public async checkAPIData(key: string, secret: string): Promise<boolean> {

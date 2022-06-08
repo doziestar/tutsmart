@@ -16,6 +16,12 @@ class APIData extends Model implements IAPIData {
     this.apiSecret = await this.generateAPISecret();
   }
 
+  public async revokeAPIData(): Promise<void> {
+    this.apiKey = null;
+    this.apiSecret = null;
+    await this.save();
+  }
+
   public async checkAPIData(key: string, secret: string): Promise<boolean> {
     const compareKey = await bcrypt.compare(key, this.apiKey);
     const compareSecret = await bcrypt.compare(secret, this.apiSecret);
