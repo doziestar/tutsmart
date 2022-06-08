@@ -6,6 +6,11 @@ import { DataTypes, Model, Optional, Sequelize, UUIDV4 } from 'sequelize';
 export type UserCreationAttributes = Optional<IUser, 'id' | 'email' | 'password'>;
 
 export class UserModel extends Model<IUser, UserCreationAttributes> implements IUser {
+  public bvn: string;
+  public nin: string;
+  public driverLicense: string;
+  public passport: string;
+  public taxId: string;
   public phoneNumber: string;
   public firstName: string;
   public lastName: string;
@@ -65,6 +70,26 @@ export default function (sequelize: Sequelize): typeof UserModel {
       refreshToken: {
         allowNull: true,
         type: DataTypes.JSON,
+      },
+      bvn: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      nin: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      driverLicense: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      passport: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      taxId: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
       },
     },
     {

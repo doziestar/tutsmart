@@ -9,7 +9,23 @@ export interface IUser {
   phoneNumber: string;
   password: string;
   refreshToken: TokenData;
+  bvn: string;
+  nin: string;
+  driverLicense: string;
+  passport: string;
+  taxId: string;
 
   generateIdentityNumber?(): Promise<string>;
   checkFraudScore?(): Promise<number>;
 }
+
+export type UserVerificationData = Extract<
+  IUser,
+  {
+    bvn?: string;
+    nin?: string;
+    driverLicense?: string;
+    passport?: string;
+    taxId?: string;
+  }
+>;
