@@ -34,9 +34,9 @@ class APIData extends Model implements IAPIData {
     return hash;
   }
 
-  public generateAPISecret(): Promise<string> {
+  public async generateAPISecret(): Promise<string> {
     const apiSecret = WALLET.privateKey.toString('hex') + WALLET.publicKey.toString('hex');
-    return bcrypt.hash(apiSecret, 10);
+    return await bcrypt.hash(apiSecret, 10);
   }
 }
 

@@ -9,7 +9,7 @@ export interface BVNResponse {
 }
 
 export type NINResponse = Omit<BVNResponse, 'bvn_number'> & {
-  bvn_number: string;
+  nin_number: string;
 };
 
 export type DriverLicenseResponse = Omit<BVNResponse, 'bvn_number'> & {
