@@ -1,6 +1,6 @@
 import { StoredToken } from '@/interfaces/token.interface';
 import Cryptr from 'cryptr';
-import { DataTypes, Model, Sequelize } from 'sequelize/types';
+import { DataTypes, Model, Sequelize } from 'sequelize';
 
 const crypto = new Cryptr(process.env.CRYPTO_SECRET);
 

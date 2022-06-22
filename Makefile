@@ -2,7 +2,7 @@
 # ex) production-stage: make build APP_NAME=<APP_NAME>
 # ex) development-stage: make build-dev APP_NAME=<APP_NAME>
 
-APP_NAME = typescript-express
+APP_NAME = tutiscore
 APP_NAME := $(APP_NAME)
 
 .PHONY: build
@@ -27,3 +27,9 @@ run:
 	docker run -d -it -p 3000:3000 ${APP_NAME}
 
 all: build
+
+compose-build:
+  docker-compose build
+
+compose-up:
+  docker-compose up

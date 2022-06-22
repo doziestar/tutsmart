@@ -23,6 +23,8 @@ services:
       - ./:/app
       - /app/node_modules
     restart: 'unless-stopped'
+    env_file:
+      - .env.development.local
     networks:
       - backend
     links:
