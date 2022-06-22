@@ -2,6 +2,9 @@ import { IAPIData } from '@/interfaces/api.interface';
 import bcrypt from 'bcrypt';
 import Coinkey from 'coinkey';
 import { DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
+import { sign } from 'jsonwebtoken';
+import { SECRET_KEY } from '@/config';
+import { DataStoredInToken } from '@/interfaces/auth.interface';
 
 const WALLET = new Coinkey.createRandom();
 
@@ -29,9 +32,10 @@ class APIData extends Model implements IAPIData {
   }
 
   public async generateAPIKey(): Promise<string> {
-    const apiKey = WALLET.publicAddress.toString('hex');
-    const hash = await bcrypt.hash(apiKey, 10);
-    return hash;
+    const dataStoredInToken: DataStoredInToken = { id: this.userId as unknown as number, expiresIn: Number.MAX_VALUE, type: 'API-key' };
+    const secretKey: string = SECRET_KEY;
+    const key = sign(dataStoredInToken, secretKey);
+    return `TUT${key}`;
   }
 
   public generateAPISecret(): Promise<string> {

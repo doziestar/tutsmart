@@ -4,6 +4,7 @@ import { Request } from 'express';
 export interface DataStoredInToken {
   id: number;
   expiresIn: number;
+  type?: 'API-key' | 'Authorization';
 }
 
 export interface TokenData {
