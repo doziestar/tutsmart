@@ -1,7 +1,7 @@
 import { CreateUserDto, loginUserDto, updateUserPasswordDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { UserDocument } from '@interfaces/users.interface';
+import { IUser } from '@interfaces/users.interface';
 import UserModel from '@models/users.model';
 import { VerifyUser } from '@utils/twil';
 import { isEmpty } from '@utils/util';
@@ -15,7 +15,7 @@ class AuthService {
 
   public async signup(userData: CreateUserDto): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'Your information is empty');
-    let findUser: UserDocument;
+    let findUser: IUser;
 
     findUser = await this.users.findOne({
       email: userData.email,
@@ -28,7 +28,7 @@ class AuthService {
     if (findUser) throw new HttpException(409, `Account with phoneNumber ${userData.phoneNumber} already exists`);
 
     // create new user
-    const newUser: UserDocument = new this.users(userData);
+    const newUser: IUser = new this.users(userData);
 
     const user = _.pick(await newUser.save(), ['_id', 'email', 'phoneNumber', 'isAdmin']);
     await VerifyUser(newUser.phoneNumber);
@@ -36,9 +36,9 @@ class AuthService {
     // SendSMS(newUser);
   }
 
-  public async login(userData: loginUserDto): Promise<{ token: string; cookie: string; findUser: UserDocument; expiresIn: Number }> {
+  public async login(userData: loginUserDto): Promise<{ token: string; cookie: string; findUser: IUser; expiresIn: Number }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-    let findUser: UserDocument;
+    let findUser: IUser;
 
     if (userData.phoneNumber) {
       findUser = await this.users.findOne({
@@ -71,7 +71,7 @@ class AuthService {
     return { token, cookie, findUser, expiresIn };
   }
 
-  public createToken(user: UserDocument): TokenData {
+  public createToken(user: IUser): TokenData {
     const dataStoredInToken: DataStoredInToken = {
       id: user._id,
       email: user.email,
