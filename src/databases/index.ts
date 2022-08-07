@@ -33,6 +33,10 @@ sequelize
     logger.info('Connection has been established successfully.');
   })
   .catch(err => {
+    logger.info('DB_HOST: ' + DB_HOST);
+    logger.info('DB_PORT: ' + DB_PORT);
+    logger.info('DB_DATABASE: ' + DB_DATABASE);
+    logger.info('DB_USER: ' + DB_USER);
     logger.error('Unable to connect to the database:', err);
   });
 

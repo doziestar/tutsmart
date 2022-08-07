@@ -1,5 +1,5 @@
 import { IOrganizationWithAPIKey } from '@/interfaces/org.interface';
-import { IUser, UserVerificationData } from '@/interfaces/users.interface';
+import { IAddress, IUser, UserVerificationData } from '@/interfaces/users.interface';
 import bcrypt from 'bcrypt';
 import Coinkey from 'coinkey';
 import { DataTypes, Model, Sequelize, UUIDV4 } from 'sequelize';
@@ -14,7 +14,7 @@ class Organization extends Model implements IOrganizationWithAPIKey {
   public name: string;
   public email: string;
   public phoneNumber: string;
-  public address: Object;
+  public address: IAddress;
   public logo: string;
   public createdAt: Date;
   public updatedAt: Date;

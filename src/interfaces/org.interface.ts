@@ -1,12 +1,12 @@
 import { IAPIData } from '@interfaces/api.interface';
-import { IUser, UserVerificationData } from '@interfaces/users.interface';
+import { IAddress, IUser, UserVerificationData } from '@interfaces/users.interface';
 
 export interface IOrganization {
   id: string;
   name: string;
   email: string;
   phoneNumber: string;
-  address: Object;
+  address: IAddress;
   logo: string;
   createdAt: Date;
   updatedAt: Date;

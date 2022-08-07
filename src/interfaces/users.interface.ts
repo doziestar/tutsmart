@@ -1,7 +1,7 @@
 import { TokenData } from '@interfaces/auth.interface';
 
 export interface IUser {
-  id: number;
+  id: string;
   email: string;
   firstName: string;
   lastName: string;
@@ -14,6 +14,7 @@ export interface IUser {
   driverLicense: string;
   passport: string;
   taxId: string;
+  isActive: boolean;
 
   generateIdentityNumber?(): Promise<string>;
   checkFraudScore?(): Promise<number>;
@@ -29,3 +30,19 @@ export type UserVerificationData = Extract<
     taxId?: string;
   }
 >;
+
+export interface IAddress {
+  id: string;
+  userId: string;
+  country: string;
+  state: string;
+  city: string;
+  street: string;
+  zipCode: string;
+  isDefault: boolean;
+  logitude: number;
+  latitude: number;
+
+  generateAddress?(): Promise<string>;
+  getAddressOnMap?(): Promise<string>;
+}
