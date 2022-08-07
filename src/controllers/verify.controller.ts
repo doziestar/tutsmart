@@ -1,5 +1,5 @@
-import { UserDocument } from '@/interfaces/users.interface';
-import usersModel from '@/models/users.model';
+import DB from '@/databases';
+import { IUser } from '@/interfaces/users.interface';
 import { logger } from '@/utils/logger';
 import { client, SendSMS } from '@utils/twil';
 import config from 'config';
@@ -28,7 +28,9 @@ class VerifyController {
       if (verification.status === 'approved') {
         logger.info('Verify code is approved');
         // update user isActive to true
-        const user: UserDocument = await usersModel.findOneAndUpdate({ phoneNumber: phoneNumber }, { isActive: true });
+        const user = await DB.Users.findOne({ where: { phoneNumber } });
+        user.isActive = true;
+        await user.save();
         console.log(`verifying ${user}`);
         await SendSMS(user);
         console.log(`verifying ${user}`);
@@ -47,8 +49,10 @@ class VerifyController {
       const code = req.body.code;
       const verification = await client.verify.services(config.get('TWILIO_VERIFY_SERVICE_SID')).verificationChecks.create({ to: phoneNumber, code });
       if (verification.status === 'approved') {
-        const user: UserDocument = await usersModel.findOne({
-          phoneNumber: phoneNumber,
+        const user: IUser = await DB.Users.findOne({
+          where: {
+            phoneNumber,
+          },
         });
         if (user) {
           res.json(user);

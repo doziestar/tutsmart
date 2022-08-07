@@ -29,6 +29,12 @@ export class loginUserDto {
 
   @IsString()
   public password: string;
+
+  @IsString()
+  public bvn?: string;
+
+  @IsString()
+  public nin?: string;
 }
 
 export class userIdDto {

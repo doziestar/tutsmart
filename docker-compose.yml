@@ -24,11 +24,11 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
-      DB_HOST: smartcore.cpkphcbmk8vq.us-east-1.rds.amazonaws.com
-      DB_PORT: 5432
-      DB_USER: dozie
-      DB_PASSWORD: smartcore29
-      DB_DATABASE: smartcore
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
 
 networks:
   backend:

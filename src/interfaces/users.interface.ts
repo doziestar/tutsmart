@@ -14,6 +14,7 @@ export interface IUser {
   driverLicense: string;
   passport: string;
   taxId: string;
+  isActive: boolean;
 
   generateIdentityNumber?(): Promise<string>;
   checkFraudScore?(): Promise<number>;

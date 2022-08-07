@@ -1,8 +1,8 @@
+import DB from '@/databases';
 import { CreateUserDto, loginUserDto, updateUserPasswordDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
 import { IUser } from '@interfaces/users.interface';
-import UserModel from '@models/users.model';
 import { VerifyUser } from '@utils/twil';
 import { isEmpty } from '@utils/util';
 import bcrypt from 'bcrypt';
@@ -11,51 +11,41 @@ import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 
 class AuthService {
-  public users = UserModel;
+  public users = DB.Users;
 
   public async signup(userData: CreateUserDto): Promise<void> {
     if (isEmpty(userData)) throw new HttpException(400, 'Your information is empty');
-    let findUser: IUser;
 
-    findUser = await this.users.findOne({
-      email: userData.email,
+    const findUser = await this.users.findOne({
+      where: {
+        $email$: userData.email,
+        $phoneNumber$: userData.phoneNumber,
+      },
     });
-    if (findUser) throw new HttpException(409, `Account with email ${userData.email}  already exists`);
 
-    findUser = await this.users.findOne({
-      phoneNumber: userData.phoneNumber,
-    });
-    if (findUser) throw new HttpException(409, `Account with phoneNumber ${userData.phoneNumber} already exists`);
+    if (findUser) throw new HttpException(409, `Account with phoneNumber ${userData.phoneNumber} or email ${userData.email} already exists`);
 
     // create new user
-    const newUser: IUser = new this.users(userData);
+    const newUser = await this.users.create(userData);
 
     const user = _.pick(await newUser.save(), ['_id', 'email', 'phoneNumber', 'isAdmin']);
-    await VerifyUser(newUser.phoneNumber);
+    await VerifyUser(user.phoneNumber);
 
     // SendSMS(newUser);
   }
 
   public async login(userData: loginUserDto): Promise<{ token: string; cookie: string; findUser: IUser; expiresIn: Number }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-    let findUser: IUser;
 
-    if (userData.phoneNumber) {
-      findUser = await this.users.findOne({
-        phoneNumber: userData.phoneNumber,
-        isActive: true,
-      });
-    } else if (userData.identityNumber) {
-      findUser = await this.users.findOne({
-        identityNumber: userData.identityNumber,
-        isActive: true,
-      });
-    } else if (userData.email) {
-      findUser = await this.users.findOne({
-        email: userData.email,
-        isActive: true,
-      });
-    }
+    const findUser = await this.users.findOne({
+      where: {
+        $email$: userData.email,
+        $phoneNumber$: userData.phoneNumber,
+        $bvn$: userData.bvn,
+        $nin$: userData.nin,
+        $identityNumber$: userData.identityNumber,
+      },
+    });
     if (!findUser) throw new HttpException(409, "Your login is either wrong or you're not active");
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -64,7 +54,7 @@ class AuthService {
     const tokenData: TokenData = this.createToken(findUser);
     const cookie = this.createCookie(tokenData);
 
-    findUser = _.pick(findUser, ['_id', 'email', 'phoneNumber', 'firstName', 'lastName']);
+    const user = _.pick(findUser, ['_id', 'email', 'phoneNumber', 'firstName', 'lastName']);
     const token = tokenData.token;
     const expiresIn = tokenData.expiresIn;
 
@@ -73,8 +63,9 @@ class AuthService {
 
   public createToken(user: IUser): TokenData {
     const dataStoredInToken: DataStoredInToken = {
-      id: user._id,
+      id: user.id,
       email: user.email,
+      expiresIn: config.get('jwt.expiresIn'),
     };
     const secretKey: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;
@@ -92,7 +83,7 @@ class AuthService {
   public forgotPassword = async (userData: updateUserPasswordDto, email: string): Promise<void> => {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser = await this.users.findOne({ email: email });
+    const findUser = await this.users.findOne({ where: { $email$: email } });
     if (!findUser) throw new HttpException(409, "You're not user");
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.oldPassword, findUser.password);
