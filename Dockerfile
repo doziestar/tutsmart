@@ -1,11 +1,16 @@
 # Common build stage
 FROM node:18-alpine3.15 as common-build-stage
 
+RUN mkdir -p /app
+
+COPY package*.json ./app
+
+RUN yarn install
+
 COPY . ./app
 
 WORKDIR /app
 
-RUN yarn install
 
 ENV DB_HOST=${DB_HOST}
 ENV DB_PORT=${DB_PORT}
