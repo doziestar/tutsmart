@@ -1,16 +1,6 @@
 version: '3.7'
 
 services:
-  # proxy:
-  #   image: nginx:alpine
-  #   container_name: proxy
-  #   ports:
-  #     - '80:80'
-  #   volumes:
-  #     - ./nginx.conf:/etc/nginx/nginx.conf
-  #   restart: 'unless-stopped'
-  #   networks:
-  #     - backend
   server:
     build:
       context: ./
@@ -31,18 +21,14 @@ services:
       - postgres
     depends_on:
       - postgres
-
-  postgres:
-    image: postgres:14.3
-    container_name: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 918273645dozie
-      POSTGRES_DB: tutis
-    ports:
-      - '5432:5432'
-    networks:
-      - backend
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: smartcore.cpkphcbmk8vq.us-east-1.rds.amazonaws.com
+      DB_PORT: 5432
+      DB_USER: dozie
+      DB_PASSWORD: smartcore29
+      DB_DATABASE: smartcore
 
 networks:
   backend:

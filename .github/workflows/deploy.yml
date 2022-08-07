@@ -1,0 +1,31 @@
+# name: Publish Docker image
+
+# on:
+#   push:
+#     branches:
+#       - release
+# jobs:
+#   remove-portainer-and-stop-docker:
+#     runs-on: self-hosted
+#     steps:
+#       - name: Remove Server logs
+#         run: echo "Removing Server logs" |
+#           echo ${{ secrets.VPS_PASSWORD }} |
+#           sudo -S rm -rf /home/dozie/hubhub/_work/HubHub/HubHub/server/logs
+
+#   build-and-deploy-to-vps:
+#     runs-on: self-hosted
+#     needs:
+#       - remove-portainer-and-stop-docker
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Bring Down Running Docker Container
+#         run: |
+#           docker-compose down
+#       - name: Build Docker Image
+#         # run: chmod +x ./build.sh && ./build.sh
+#         run: |
+#           docker-compose build
+#       - name: Run Docker Image
+#         run: |
+#           docker-compose up -d

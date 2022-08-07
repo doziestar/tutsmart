@@ -7,6 +7,12 @@ WORKDIR /app
 
 RUN yarn install
 
+ENV DB_HOST=${DB_HOST}
+ENV DB_PORT=${DB_PORT}
+ENV DB_USER=${DB_USER}
+ENV DB_PASSWORD=${DB_PASSWORD}
+ENV DB_NAME=${DB_NAME}
+
 EXPOSE 3000
 
 # Development build stage

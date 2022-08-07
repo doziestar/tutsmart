@@ -33,6 +33,7 @@
     "flutterwave-node-v3": "^1.0.9",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
+    "jod": "^0.0.0",
     "jsonwebtoken": "^8.5.1",
     "kafkajs": "^2.0.2",
     "lodash": "^4.17.21",
