@@ -5,6 +5,7 @@ export interface DataStoredInToken {
   id: string;
   expiresIn: number;
   email: string;
+  type?: 'API-key' | 'Authorization';
 }
 
 export interface TokenData {
