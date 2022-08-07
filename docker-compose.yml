@@ -24,11 +24,29 @@ services:
     environment:
       NODE_ENV: development
       PORT: 3000
-      DB_HOST: ${DB_HOST}
+      DB_HOST: host.docker.internal
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_DATABASE: ${DB_DATABASE}
+
+  postgres:
+    image: postgres
+    container_name: tutis_postgres
+    ports:
+      - '5432:5432'
+    restart: 'unless-stopped'
+    env_file:
+      - .env.development.local
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_HOST: ${DB_HOST}
+
 
 networks:
   backend:
