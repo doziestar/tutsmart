@@ -1,11 +1,18 @@
 import DB from '@/databases';
+import { GovernmentIdDto } from '@/dtos/users.dto';
+import { HttpException } from '@/exceptions/HttpException';
+import { RequestWithUser } from '@/interfaces/auth.interface';
 import { IUser } from '@/interfaces/users.interface';
+import VerificationService from '@/services/verify.service';
 import { logger } from '@/utils/logger';
+import { isEmpty } from '@/utils/util';
 import { client, SendSMS } from '@utils/twil';
 import config from 'config';
 import { NextFunction, Request, Response } from 'express';
 
 class VerifyController {
+  public verifyService = new VerificationService();
+
   public send = function VerifyUser(phoneNumber: string) {
     return new Promise((resolve, reject) => {
       client.verify
@@ -58,6 +65,18 @@ class VerifyController {
           res.json(user);
         }
       }
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public verifyGovernmentId = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userData: GovernmentIdDto = req.body;
+
+      if (isEmpty(userData)) throw new HttpException(400, 'We need your government id to verify you');
+      const verifyGovernmentIdData = await this.verifyService.verifyGovernmentId(userData);
+      res.status(200).json({ data: verifyGovernmentIdData, message: 'government id verified successfully' });
     } catch (error) {
       next(error);
     }

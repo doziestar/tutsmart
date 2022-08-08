@@ -1,3 +1,4 @@
+import { GovernmentIdDto } from '@/dtos/users.dto';
 import { IUser } from '@/interfaces/users.interface';
 import DB from '@databases';
 
@@ -27,6 +28,10 @@ class VerificationService {
       bvn: user.bvn,
     };
   }
+
+  public verifyGovernmentId = async (userData: GovernmentIdDto) => {
+    throw new Error('Method not implemented.');
+  };
 }
 
 export default VerificationService;
