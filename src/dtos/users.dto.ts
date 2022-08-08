@@ -87,3 +87,14 @@ export class VerifySignInPhoneNumberDto {
   @IsString()
   public code: string;
 }
+
+export class GovernmentIdDto {
+  @IsString()
+  public governmentId: string;
+
+  @IsString()
+  public userId: string;
+
+  @IsString()
+  public type: string;
+}

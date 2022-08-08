@@ -41,22 +41,20 @@ class AuthService {
     // SendSMS(newUser);
   }
 
-  public async login(userData: LoginUserDto): Promise<{ token: string; cookie: string; findUser: IUser; expiresIn: Number }> {
+  public async login(userData: LoginUserDto): Promise<{ token: string; cookie: string; user: Partial<IUser>; expiresIn: Number }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser = await this.users.findOne({
-      where: {
-        [Op.or]: [
-          {
-            email: userData.email,
-            phoneNumber: userData.phoneNumber,
-            bvn: userData.bvn,
-            nin: userData.nin,
-            identityNumber: userData.identityNumber,
-          },
-        ],
-      },
-    });
+    let findUser: IUser;
+    if (userData.email) findUser = await this.users.findOne({ where: { email: userData.email } });
+
+    if (userData.phoneNumber) findUser = await this.users.findOne({ where: { phoneNumber: userData.phoneNumber } });
+
+    if (userData.identityNumber) findUser = await this.users.findOne({ where: { identityNumber: userData.identityNumber } });
+
+    if (userData.bvn) findUser = await this.users.findOne({ where: { bvn: userData.bvn } });
+
+    if (userData.nin) findUser = await this.users.findOne({ where: { nin: userData.nin } });
+
     if (!findUser) throw new HttpException(409, "Your login is either wrong or you're not active");
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -65,11 +63,11 @@ class AuthService {
     const tokenData: TokenData = this.createToken(findUser);
     const cookie = this.createCookie(tokenData);
 
-    const user = _.pick(findUser, ['_id', 'email', 'phoneNumber', 'firstName', 'lastName']);
+    const user = _.pick(findUser, ['id', 'email', 'phoneNumber', 'firstName', 'lastName', 'identityNumber']);
     const token = tokenData.token;
     const expiresIn = tokenData.expiresIn;
 
-    return { token, cookie, findUser, expiresIn };
+    return { token, cookie, user, expiresIn };
   }
 
   public createToken(user: IUser): TokenData {
