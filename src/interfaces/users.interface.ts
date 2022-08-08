@@ -5,6 +5,7 @@ export interface IUser {
   email: string;
   firstName: string;
   lastName: string;
+  dob: string;
   identityNumber: string;
   phoneNumber: string;
   password: string;
@@ -14,6 +15,7 @@ export interface IUser {
   driverLicense: string;
   passport: string;
   taxId: string;
+  vin: string;
   isActive: boolean;
 
   generateIdentityNumber?(): Promise<string>;

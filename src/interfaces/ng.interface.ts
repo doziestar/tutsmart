@@ -37,3 +37,17 @@ export interface TaxInformation {
 }
 
 export type TaxIdResponse = Omit<BVNResponse, 'bvn_number'> & TaxInformation;
+
+export interface VerificationRequest {
+  searchParameter: string;
+  verificationType: 'NIN-SEARCH' | 'DRIVER-LICENSE-FULL-DETAIL-VERIFICATION' | 'PASSPORT-FULL-DETAILS' | 'VIN-FACE-MATCH-VERIFICATION';
+  countryCode: 'NG';
+  country: 'NG';
+  firstName: string;
+  lastName: string;
+  dob: string;
+  selfie: string;
+  selfieToDatabaseMatch: boolean;
+  channel_code: 'APISNG';
+  bvn: string;
+}

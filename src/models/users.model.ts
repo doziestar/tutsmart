@@ -20,6 +20,8 @@ export class UserModel extends Model<IUser, UserCreationAttributes> implements I
   public password: string;
   public refreshToken: TokenData;
   public isActive: boolean;
+  public dob: string;
+  public vin: string;
 
   public async generateIdentityNumber(): Promise<string> {
     const uid = Math.random().toString(36).slice(2) + randomBytes(8).toString('hex') + new Date().getTime();
@@ -89,6 +91,14 @@ export default function (sequelize: Sequelize): typeof UserModel {
         type: DataTypes.STRING(45),
       },
       taxId: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      dob: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      vin: {
         allowNull: true,
         type: DataTypes.STRING(45),
       },
