@@ -1,4 +1,4 @@
-import { CreateUserDto, loginUserDto } from '@dtos/users.dto';
+import { CreateUserDto, LoginUserDto } from '@dtos/users.dto';
 import { RequestWithUser } from '@interfaces/auth.interface';
 import AuthService from '@services/auth.service';
 import { NextFunction, Request, Response } from 'express';
@@ -22,7 +22,7 @@ class AuthController {
 
   public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: loginUserDto = req.body;
+      const userData: LoginUserDto = req.body;
       console.log('userData', userData);
       const { token, cookie, findUser, expiresIn } = await this.authService.login(userData);
 

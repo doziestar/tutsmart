@@ -17,7 +17,7 @@ export class CreateUserDto {
   public phoneNumber: string;
 }
 
-export class loginUserDto {
+export class LoginUserDto {
   @IsPhoneNumber()
   public phoneNumber?: string;
 
@@ -37,12 +37,12 @@ export class loginUserDto {
   public nin?: string;
 }
 
-export class userIdDto {
+export class UserIdDto {
   @IsString()
   public userId: string;
 }
 
-export class updateUserDto {
+export class UpdateUserDto {
   @IsString()
   firstName?: String;
 
@@ -50,7 +50,7 @@ export class updateUserDto {
   lastName?: String;
 }
 
-export class updateUserPasswordDto {
+export class UpdateUserPasswordDto {
   @IsString()
   public oldPassword: string;
 
@@ -61,12 +61,12 @@ export class updateUserPasswordDto {
   public confirmPassword: string;
 }
 
-export class updateUserPhoneNumberDto {
+export class UpdateUserPhoneNumberDto {
   @IsString()
   public phoneNumber: string;
 }
 
-export class updateProfileDto {
+export class UpdateProfileDto {
   @IsString()
   public bio: String;
 
@@ -80,7 +80,7 @@ export class updateProfileDto {
   public dateOfBirth: Date;
 }
 
-export class verifySignInPhoneNumberDto {
+export class VerifySignInPhoneNumberDto {
   @IsString()
   public phoneNumber: string;
 
