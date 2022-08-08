@@ -19,6 +19,7 @@
     "docker:stop": "docker-compose stop"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.1",
@@ -55,6 +56,7 @@
   "devDependencies": {
     "@swc/cli": "^0.1.51",
     "@swc/core": "^1.2.108",
+    "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.1",
     "@types/cookie-parser": "^1.4.2",

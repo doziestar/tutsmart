@@ -87,3 +87,8 @@ export class verifySignInPhoneNumberDto {
   @IsString()
   public code: string;
 }
+
+export class verifyidentityNumberDto {
+  @IsString()
+  public identityNumber: string;
+}
