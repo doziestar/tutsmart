@@ -88,11 +88,10 @@ export class VerifySignInPhoneNumberDto {
   public code: string;
 }
 
-
 export class verifyidentityNumberDto {
   @IsString()
   public identityNumber: string;
-
+}
 export class GovernmentIdDto {
   @IsString()
   public governmentId: string;
@@ -102,5 +101,4 @@ export class GovernmentIdDto {
 
   @IsString()
   public type: string;
-
 }

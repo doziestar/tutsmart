@@ -1,14 +1,12 @@
-import DB from '@/databases';
 // import { IUser } from '@/interfaces/users.interface';
 import { NextFunction, Request, Response } from 'express';
-import axios from '@utils/axios';
+import idService from '@services/id.service';
 
 class idController {
   getNIN = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await DB.Users.findOne({ where: { identityNumber: req.body.identityNumber } });
-      const NIN = await axios.NINValidationByNIN(user.nin);
-      res.json(NIN);
+      const result = await idService.findNIN(req.body.identityNumber);
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -16,8 +14,7 @@ class idController {
 
   getVotersCard = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await DB.Users.findOne({ where: { identityNumber: req.body.identityNumber } });
-      const result = await axios.VotersCard(user.vin);
+      const result = await idService.findVotersCard(req.body.identityNumber);
       res.json(result);
     } catch (error) {
       next(error);
@@ -26,13 +23,7 @@ class idController {
 
   getInternationalPassport = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await DB.Users.findOne({ where: { identityNumber: req.body.identityNumber } });
-      const result = await axios.InternationalPassport({
-        searchParameter: user.passport,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        dob: user.dob,
-      });
+      const result = await idService.findPassport(req.body.identityNumber);
       res.json(result);
     } catch (error) {
       next(error);
@@ -41,9 +32,8 @@ class idController {
 
   getDriversLicense = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await DB.Users.findOne({ where: { identityNumber: req.body.identityNumber } });
-      const NIN = await axios.DriversLicense({ searchParameter: user.passport, firstName: user.firstName, lastName: user.lastName, dob: user.dob });
-      res.json(NIN);
+      const result = await idService.findDriversLicense(req.body.identityNumber);
+      res.json(result);
     } catch (error) {
       next(error);
     }
@@ -51,8 +41,7 @@ class idController {
 
   getBVN = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const user = await DB.Users.findOne({ where: { identityNumber: req.body.identityNumber } });
-      const result = await axios.BVN(user.bvn);
+      const result = await idService.findBVN(req.body.identityNumber);
       res.json(result);
     } catch (error) {
       next(error);
