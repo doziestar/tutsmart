@@ -1,5 +1,5 @@
-import { updateProfileDto, updateUserDto, userIdDto } from '@dtos/users.dto';
-import { UserDocument, UserProfileDocument } from '@interfaces/users.interface';
+import { UpdateProfileDto, UpdateUserDto, UserIdDto } from '@dtos/users.dto';
+import { IUser, UserProfileDocument } from '@interfaces/users.interface';
 import userService from '@services/users.service';
 import { NextFunction, Request, Response } from 'express';
 
@@ -8,8 +8,8 @@ class UsersController {
 
   public async getMe(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userId: userIdDto = { userId: req.params.userId };
-      const user: UserDocument = await this.userService.me(userId);
+      const userId: UserIdDto = { userId: req.params.userId };
+      const user: IUser = await this.userService.me(userId);
       return res.status(200).json(user);
     } catch (err) {
       next(err);
@@ -18,7 +18,7 @@ class UsersController {
 
   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const findAllUsersData: UserDocument[] = await this.userService.findAllUser();
+      const findAllUsersData: IUser[] = await this.userService.findAllUser();
 
       res.status(200).json({ data: findAllUsersData, message: 'findAll' });
     } catch (error) {
@@ -28,8 +28,8 @@ class UsersController {
 
   public getUserById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId: userIdDto = { userId: req.params.id };
-      const findOneUserData: UserDocument = await this.userService.findUserById(userId);
+      const userId: UserIdDto = { userId: req.params.id };
+      const findOneUserData: IUser = await this.userService.findUserById(userId);
 
       res.status(200).json({ data: findOneUserData, message: 'findOne' });
     } catch (error) {
@@ -39,7 +39,7 @@ class UsersController {
 
   public generateUserId = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userId: userIdDto = { userId: req.params.id };
+      const userId: UserIdDto = { userId: req.params.id };
 
       const genID: UserProfileDocument = await this.userService.generateUserId(userId);
 
@@ -51,12 +51,12 @@ class UsersController {
 
   public updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: updateUserDto = req.body;
+      const userData: UpdateUserDto = req.body;
       const userId: string = req.params.id;
       console.log(userData + 'controller');
       console.log(userId + 'controller');
 
-      const updateUserData: UserDocument = await this.userService.updateUser(userId, userData);
+      const updateUserData: IUser = await this.userService.updateUser(userId, userData);
 
       res.status(200).json({ data: updateUserData, message: 'User Updated' });
     } catch (error) {
@@ -66,12 +66,12 @@ class UsersController {
 
   public updateUserProfile = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const userData: updateProfileDto = req.body;
+      const userData: UpdateProfileDto = req.body;
       const userId: string = req.params.id;
       console.log(userData + 'controller');
       console.log(userId + 'controller');
 
-      const updateUserData: UserDocument = await this.userService.updateUserProfile(userId, userData);
+      const updateUserData: IUser = await this.userService.updateUserProfile(userId, userData);
 
       res.status(200).json({ data: updateUserData, message: 'User Updated' });
     } catch (error) {
