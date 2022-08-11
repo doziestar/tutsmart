@@ -102,3 +102,17 @@ export class GovernmentIdDto {
   @IsString()
   public type: string;
 }
+
+export class ExternalInfoDto {
+  @IsString()
+  public firstName: string;
+
+  @IsString()
+  public lastName: string;
+
+  @IsString()
+  public dob: string;
+
+  @IsString()
+  public governmentId: string;
+}

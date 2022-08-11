@@ -14,11 +14,11 @@ class VerifyRoute implements Routes {
   }
 
   private initializeRoutes() {
-    this.router.post(`${this.path}nin`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getNIN);
-    this.router.post(`${this.path}vin`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getVotersCard);
-    this.router.post(`${this.path}passport`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getInternationalPassport);
-    this.router.post(`${this.path}drivers-license`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getDriversLicense);
-    this.router.post(`${this.path}bvn`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getBVN);
+    this.router.post(`${this.path}verify`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.verify);
+    // this.router.post(`${this.path}vin`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getVotersCard);
+    // this.router.post(`${this.path}passport`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getInternationalPassport);
+    // this.router.post(`${this.path}drivers-license`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getDriversLicense);
+    // this.router.post(`${this.path}bvn`, validationMiddleware(verifyidentityNumberDto, 'body'), this.idController.getBVN);
   }
 }
 

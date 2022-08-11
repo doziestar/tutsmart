@@ -25,10 +25,10 @@ export default function (sequelize: Sequelize): typeof Address {
     },
     {
       sequelize,
-      tableName: 'bankVerification',
+      tableName: 'address',
       timestamps: true,
       paranoid: true,
     },
   );
-  return BankVerification;
+  return Address;
 }
