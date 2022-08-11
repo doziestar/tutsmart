@@ -3,16 +3,6 @@ import EnairaService from '@/services/enaira.service';
 import { NextFunction, Request, Response } from 'express';
 
 class EnairaController {
-  public async getEnairaUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaUser(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   public async createEnairaUser(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
       const userData: EnairaUser = req.body;
@@ -43,15 +33,15 @@ class EnairaController {
     }
   }
 
-  public async getEnairaTransaction(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaTransaction(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaTransaction(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaTransaction(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   public async payEnairaInvoiceWithPin(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
@@ -83,45 +73,45 @@ class EnairaController {
     }
   }
 
-  public async getEnairaInvoiceStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaInvoiceStatus(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaInvoiceStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaInvoiceStatus(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
-  public async getEnairaTransactionStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaTransactionStatus(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaTransactionStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaTransactionStatus(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
-  public async getEnairaTransactions(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaTransactions(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaTransactions(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaTransactions(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
-  public async getEnairaWallet(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaWallet(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaWallet(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaWallet(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   public async getEnairaWalletBalance(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
@@ -133,90 +123,80 @@ class EnairaController {
     }
   }
 
-  public async getEnairaWalletTransactions(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getEnairaWalletTransactions(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getEnairaWalletTransactions(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getEnairaWalletTransactions(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   public async createWithdrawal(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaCreateWithdrawalBody = req.body;
-      const user: any = await EnairaService.createWithdrawal(userData);
+      const userData: any = req.body;
+      const user: any = await EnairaService.createWithdrawal(userData, parseInt(req.params.account, 10));
       return res.status(200).json(user);
     } catch (err) {
       next(err);
     }
   }
 
-  public async getWithdrawal(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getWithdrawal(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getWithdrawal(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getWithdrawal(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
-  public async getWithdrawalStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getWithdrawalStatus(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getWithdrawalStatus(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getWithdrawalStatus(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
-  public async getWithdrawals(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getWithdrawals(userId);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async getWithdrawals(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userId: string = req.params.userId;
+  //     const user: any = await EnairaService.getWithdrawals(userId);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   public async paymentFromWallet(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaPaymentFromWalletBody = req.body;
-      const user: any = await EnairaService.paymentFromWallet(userData);
+      const userData: any = req.body;
+      const user: any = await EnairaService.paymentFromWallet(userData, parseInt(req.params.account, 10));
       return res.status(200).json(user);
     } catch (err) {
       next(err);
     }
   }
 
-  public async paymentToWallet(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userData: EnairaPaymentToWalletBody = req.body;
-      const user: any = await EnairaService.paymentToWallet(userData);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
+  // public async paymentToWallet(req: Request, res: Response, next: NextFunction): Promise<Response> {
+  //   try {
+  //     const userData: any = req.body;
+  //     const user: any = await EnairaService.paymentToWallet(userData);
+  //     return res.status(200).json(user);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // }
 
   public async createMerchant(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaCreateMerchantBody = req.body;
-      const user: any = await EnairaService.createMerchant(userData);
-      return res.status(200).json(user);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  public async getMerchant(req: Request, res: Response, next: NextFunction): Promise<Response> {
-    try {
-      const userId: string = req.params.userId;
-      const user: any = await EnairaService.getMerchant(userId);
+      const userData: any = req.body;
+      const user: any = await EnairaService.createMerchant(userData, req.body.account);
       return res.status(200).json(user);
     } catch (err) {
       next(err);
@@ -225,7 +205,7 @@ class EnairaController {
 
   public async getUserDetailsByPhone(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaGetUserDetailsByPhoneBody = req.body;
+      const userData: any = req.body;
       const user: any = await EnairaService.getUserDetailsByPhone(userData);
       return res.status(200).json(user);
     } catch (err) {
@@ -235,7 +215,7 @@ class EnairaController {
 
   public async getUserDetailsByWalletAlias(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaGetUserDetailsByWalletAliasBody = req.body;
+      const userData: any = req.body;
       const user: any = await EnairaService.getUserDetailsByWalletAlias(userData);
       return res.status(200).json(user);
     } catch (err) {
@@ -245,8 +225,8 @@ class EnairaController {
 
   public async payWithToken(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaPayWithTokenBody = req.body;
-      const user: any = await EnairaService.payWithToken(userData);
+      const userData: any = req.body;
+      const user: any = await EnairaService.payWithToken(userData, 500);
       return res.status(200).json(user);
     } catch (err) {
       next(err);
@@ -255,7 +235,7 @@ class EnairaController {
 
   public async createConsumerV2(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaCreateConsumerV2Body = req.body;
+      const userData = req.body;
       const user: any = await EnairaService.createConsumerV2(userData);
       return res.status(200).json(user);
     } catch (err) {
@@ -265,8 +245,8 @@ class EnairaController {
 
   public async createMerchantV2(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const userData: EnairaCreateMerchantV2Body = req.body;
-      const user: any = await EnairaService.createMerchantV2(userData);
+      const userData = req.body;
+      const user: any = await EnairaService.createMerchantV2(userData, req.body.account);
       return res.status(200).json(user);
     } catch (err) {
       next(err);

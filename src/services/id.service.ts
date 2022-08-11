@@ -114,6 +114,18 @@ class IDService {
       throw error;
     }
   }
+
+  private async searchBVN(bvn: string): Promise<IUser[]> {
+    try {
+      if (isEmpty(bvn)) throw new HttpException(400, 'Please enter a valid BVN');
+
+      const bvnData = await axios.BVN(bvn);
+      if (!bvnData) throw new HttpException(409, 'You passed a wrong BVN');
+      return bvnData;
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default IDService;

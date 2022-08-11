@@ -12,12 +12,6 @@ class EnairaService {
   private enairaBaseUrl = ENAIRA_API_URL;
   private enairaUserUrl = ENAIRA_USER_API_URL;
 
-  public async getEnairaUser(userId: string): Promise<EnairaUser> {
-    const response = await fetch(`${this.enairaUserUrl}${userId}`);
-    const data = await response.json();
-    return data;
-  }
-
   public async createEnairaUser(user: EnairaUser): Promise<EnairaUser> {
     const response = await fetch(this.enairaUserUrl, {
       method: 'POST',
@@ -95,24 +89,6 @@ class EnairaService {
     return data;
   }
 
-  public async getEnairaTransaction(transactionId: string): Promise<EnairaTransactionRespse> {
-    const response = await fetch(`${this.enairaBaseUrl}${transactionId}`);
-    const data = await response.json();
-    return data;
-  }
-
-  public async getEnairaTransactions(userId: string): Promise<EnairaTransactionRespse[]> {
-    const response = await fetch(`${this.enairaBaseUrl}${userId}/transactions`);
-    const data = await response.json();
-    return data;
-  }
-
-  public async getEnairaWallet(userId: string): Promise<EnairaUser> {
-    const response = await fetch(`${this.enairaBaseUrl}${userId}/wallet`);
-    const data = await response.json();
-    return data;
-  }
-
   public async getEnairaWalletBalance(userId: string): Promise<EnairaUser> {
     const response = await fetch(`${this.enairaBaseUrl}/GetBalance`, {
       method: 'POST',
@@ -122,12 +98,6 @@ class EnairaService {
       },
       body: JSON.stringify({ userId }),
     });
-    const data = await response.json();
-    return data;
-  }
-
-  public async getEnairaWalletTransactions(userId: string): Promise<EnairaTransactionRespse[]> {
-    const response = await fetch(`${this.enairaBaseUrl}${userId}/wallet/transactions`);
     const data = await response.json();
     return data;
   }
@@ -161,7 +131,7 @@ class EnairaService {
   }
 
   // CreateMerchant
-  public async createMerchant(user: EnairaUser, merchant: EnairaMerchant): Promise<EnairaUser> {
+  public async createMerchant(user: EnairaUser, merchant: string): Promise<EnairaUser> {
     const response = await fetch(`${this.enairaBaseUrl}CreateMerchant`, {
       method: 'POST',
       headers: {
@@ -231,7 +201,7 @@ class EnairaService {
   }
 
   // EnairaUser CreateMerchantV2
-  public async createMerchantV2(user: EnairaUser, merchant: EnairaMerchant): Promise<EnairaUser> {
+  public async createMerchantV2(user: EnairaUser, merchant: string): Promise<EnairaUser> {
     const response = await fetch(`${this.enairaBaseUrl}CreateMerchantV2`, {
       method: 'POST',
       headers: {
@@ -241,6 +211,7 @@ class EnairaService {
       body: JSON.stringify({ user, merchant }),
     });
     const data = await response.json();
+
     return data;
   }
 }
