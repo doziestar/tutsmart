@@ -1,11 +1,13 @@
+import { faker } from '@faker-js/faker';
+
 export type BVNResponse = {
-  responseCode: string;
+  responseCode: 200 | 400;
   BVN: string;
   firstName: string;
   middleName: string;
   lastName: string;
-  dateOfBirth: string;
-  registrationDate: string;
+  dateOfBirth: Date;
+  registrationDate: Date;
   enrollmentBank: string;
   enrollmentBranch: string;
   email: string;
@@ -22,12 +24,12 @@ export type BVNResponse = {
   residentialAddress: string;
   stateOfOrigin: string;
   stateOfResidence: string;
-  watchListed: string;
+  watchListed: boolean;
 };
 
 export interface BVNInterface {
   userId?: string;
-  response_code: string;
+  response_code: 200 | 400;
   response_message: string;
   response_data: BVNResponse;
   searchParameter?: string;
@@ -193,3 +195,40 @@ export interface IAddress {
 export interface VotersCardInterface {
   userId?: string;
 }
+
+export const generateBVN = (): BVNInterface => ({
+  userId: faker.random.alphaNumeric(10),
+  response_code: 200,
+  response_message: faker.random.words(6),
+  response_data: fakeBVNResponse(),
+});
+
+// using faker to generate fake data for testing
+export const fakeBVNResponse = (): BVNResponse => ({
+  responseCode: 200,
+  BVN: faker.random.numeric(9),
+  firstName: faker.name.firstName(),
+  middleName: faker.name.middleName(),
+  lastName: faker.name.lastName(),
+  dateOfBirth: faker.date.birthdate(),
+  registrationDate: faker.date.past(),
+  enrollmentBank: faker.company.name(),
+  enrollmentBranch: faker.address.city(),
+  email: faker.address.streetAddress(),
+  gender: faker.name.gender(),
+  levelOfAccount: faker.random.numeric(),
+  lgaOfOrigin: faker.address.county(),
+  lgaOfResidence: faker.address.county(),
+  maritalStatus: faker.name.gender(),
+  NIN: faker.random.numeric(9),
+  nameOnCard: faker.name.fullName(),
+  nationality: faker.address.country(),
+  phoneNumber1: faker.phone.number(),
+  residentialAddress: faker.address.streetAddress(),
+  phoneNumber2: faker.phone.number(),
+  stateOfOrigin: faker.address.state(),
+  stateOfResidence: faker.address.state(),
+  watchListed: true,
+});
+
+// console.log(generateBVN());

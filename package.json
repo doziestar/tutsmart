@@ -32,6 +32,7 @@
     "dotenv": "^10.0.0",
     "envalid": "^7.1.0",
     "express": "^4.17.1",
+    "faker": "^6.6.6",
     "flutterwave-node-v3": "^1.0.9",
     "helmet": "^4.6.0",
     "hpp": "^0.2.3",
@@ -55,6 +56,7 @@
     "zod": "^3.17.10"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.4.0",
     "@swc/cli": "^0.1.51",
     "@swc/core": "^1.2.108",
     "@types/axios": "^0.14.0",

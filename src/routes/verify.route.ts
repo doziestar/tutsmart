@@ -5,7 +5,7 @@ import validationMiddleware from '@middlewares/validation.middleware';
 import { Router } from 'express';
 
 class VerifyRoute implements Routes {
-  public path = '/sms/';
+  public path = '/verify/';
   public router = Router();
   public verifyController = new VerifyController();
 
@@ -15,8 +15,8 @@ class VerifyRoute implements Routes {
 
   private initializeRoutes() {
     // this.router.post(`${this.path}send-notification`, validationMiddleware(updateUserPhoneNumberDto, 'body'), this.verifyController.send);
-    this.router.post(`${this.path}verify-code`, validationMiddleware(VerifySignInPhoneNumberDto, 'body'), this.verifyController.verify);
-    this.router.post(`$(this.path)verify-government-id`, validationMiddleware(GovernmentIdDto, 'body'), this.verifyController.verifyGovernmentId);
+    this.router.post(`${this.path}sms-code`, validationMiddleware(VerifySignInPhoneNumberDto, 'body'), this.verifyController.verify);
+    this.router.post(`$(this.path)government-id`, validationMiddleware(GovernmentIdDto, 'body'), this.verifyController.verifyGovernmentId);
   }
 }
 
