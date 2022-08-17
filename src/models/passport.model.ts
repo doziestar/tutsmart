@@ -1,8 +1,8 @@
-import { PassportInterface } from '@/interfaces/id.interface';
+import { PassportInterface, PassportResponse } from '@/interfaces/id.interface';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 class InternationalPassport extends Model implements PassportInterface {
-  public userId: string;
+  public userId?: string;
   public responseCode: string;
   public description: string;
   public verificationType: string;
@@ -12,29 +12,17 @@ class InternationalPassport extends Model implements PassportInterface {
   public transactionDate: string;
   public searchParameter: string;
   public callBackUrl?: string;
-  public livenessScore: number;
+  public livenessScore: string;
   public paymentRef?: string;
-  public response: {
-    first_name: string;
-    last_name: string;
-    middle_name: string;
-    dob: string;
-    mobile?: string;
-    photo: string;
-    gender: string;
-    issued_at: string;
-    issued_date: string;
-    expiry_date: string;
-    reference_id: string;
-  };
-  faceMatch?: string;
+  public response: PassportResponse;
+  public faceMatch?: string;
 }
 
 export default function (sequelize: Sequelize): typeof InternationalPassport {
-  BankVerification.init(
+  InternationalPassport.init(
     {
       userId: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING(45),
       },
       responseCode: {
@@ -76,62 +64,22 @@ export default function (sequelize: Sequelize): typeof InternationalPassport {
       livenessScore: {
         allowNull: false,
         type: DataTypes.STRING(45),
-        paymentRef: {
-          allowNull: true,
-          type: DataTypes.STRING(45),
-        },
-        response: {
-          first_name: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          last_name: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          middle_name: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          dob: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          mobile: {
-            allowNull: true,
-            type: DataTypes.STRING(45),
-          },
-          photo: {
-            allowNull: false,
-            type: DataTypes.STRING(45), //todo
-          },
-          gender: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          issued_at: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          issued_date: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          expiry_date: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-          reference_id: {
-            allowNull: false,
-            type: DataTypes.STRING(45),
-          },
-        },
-        faceMatch: {
-          allowNull: true,
-          type: DataTypes.STRING(45),
-        },
+      },
+      paymentRef: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
+      },
+      response: {
+        allowNull: true,
+        type: DataTypes.JSON,
+      },
+
+      faceMatch: {
+        allowNull: true,
+        type: DataTypes.STRING(45),
       },
     },
+
     {
       sequelize,
       tableName: 'international_passports',
