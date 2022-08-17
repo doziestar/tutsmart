@@ -2,6 +2,12 @@ import APIModel from '@/models/api.model';
 import StoreTokenModel from '@/models/token.model';
 import { DB_DATABASE, DB_HOST, DB_PASSWORD, DB_PORT, DB_USER, NODE_ENV } from '@config';
 import UserModel from '@models/users.model';
+import AddressModel from '@models/address.model';
+import bvnModel from '@/models/bvn.model';
+import driversLicenseModel from '@/models/driversLicense.model';
+import ninModel from '@/models/nin.model';
+import passportModel from '@/models/passport.model';
+import vinModel from '@/models/vin.model';
 import { logger } from '@utils/logger';
 import Sequelize from 'sequelize';
 
@@ -44,6 +50,12 @@ const DB = {
   Users: UserModel(sequelize),
   APIKeys: APIModel(sequelize),
   Tokens: StoreTokenModel(sequelize),
+  Address: AddressModel(sequelize),
+  BVN: bvnModel(sequelize),
+  DriversLicense: driversLicenseModel(sequelize),
+  NIN: ninModel(sequelize),
+  Passport: passportModel(sequelize),
+  VIN: vinModel(sequelize),
   sequelize, // connection instance (RAW queries)
   Sequelize, // library
 };

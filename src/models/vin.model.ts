@@ -2,14 +2,14 @@ import { VotersCardInterface } from '@/interfaces/id.interface';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 
 class VotersCard extends Model implements VotersCardInterface {
-  public userId: string;
+  public userId?: string;
 }
 
 export default function (sequelize: Sequelize): typeof VotersCard {
   VotersCard.init(
     {
       userId: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.STRING(45),
       },
     },

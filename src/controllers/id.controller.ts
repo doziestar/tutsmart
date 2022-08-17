@@ -3,45 +3,10 @@ import { NextFunction, Request, Response } from 'express';
 import idService from '@services/id.service';
 
 class idController {
-  getNIN = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  public idService = new idService();
+  verify = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const result = await idService.findNIN(req.body.identityNumber);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getVotersCard = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const result = await idService.findVotersCard(req.body.identityNumber);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getInternationalPassport = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const result = await idService.findPassport(req.body.identityNumber);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getDriversLicense = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const result = await idService.findDriversLicense(req.body.identityNumber);
-      res.json(result);
-    } catch (error) {
-      next(error);
-    }
-  };
-
-  getBVN = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const result = await idService.findBVN(req.body.identityNumber);
+      const result = await this.idService.search(req.body.identityNumber, req.body.type);
       res.json(result);
     } catch (error) {
       next(error);
