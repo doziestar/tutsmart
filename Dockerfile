@@ -5,7 +5,8 @@ RUN mkdir -p /app
 
 COPY package*.json ./app
 
-RUN yarn install
+RUN yarn install --production=false
+# RUN yarn add cross-env
 
 COPY . ./app
 
