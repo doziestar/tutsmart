@@ -1,9 +1,9 @@
+import { BVNInterface, DriversLicenseInterface, NINInterface, PassportInterface, VotersCardInterface } from '@/interfaces/id.interface';
 import DB from '@databases';
+import { ExternalInfoDto, verifyidentityNumberDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
-import { verifyidentityNumberDto, ExternalInfoDto } from '@dtos/users.dto';
-import { BVNInterface, NINInterface, PassportInterface, VotersCardInterface, DriversLicenseInterface } from '@/interfaces/id.interface';
-import { isEmpty } from '@utils/util';
 import axios from '@utils/axios';
+import { isEmpty } from '@utils/util';
 
 type DBkeys = keyof typeof DB;
 type IDtype = verifyidentityNumberDto | ExternalInfoDto;
@@ -27,7 +27,7 @@ class IDService {
               : await this.searchVotersCard(data.governmentId);
           result = await this.saveToDB(extData, id);
         } else {
-          const user = await DB.Users.findOne({ where: { identityNumber: data.identityNumber } });
+          const user = await DB.Users.findOne({ where: { TutisID: data.identityNumber } });
           if (!user) throw new HttpException(409, "You're not a valid user");
 
           const intData = {

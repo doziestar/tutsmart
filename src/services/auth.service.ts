@@ -49,7 +49,7 @@ class AuthService {
 
     if (userData.phoneNumber) findUser = await this.users.findOne({ where: { phoneNumber: userData.phoneNumber } });
 
-    if (userData.identityNumber) findUser = await this.users.findOne({ where: { identityNumber: userData.identityNumber } });
+    if (userData.identityNumber) findUser = await this.users.findOne({ where: { TutisID: userData.identityNumber } });
 
     if (userData.bvn) findUser = await this.users.findOne({ where: { bvn: userData.bvn } });
 

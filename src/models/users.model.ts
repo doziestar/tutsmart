@@ -1,6 +1,5 @@
 import { TokenData } from '@/interfaces/auth.interface';
 import { IUser } from '@interfaces/users.interface';
-import { randomBytes } from 'crypto';
 import { DataTypes, Model, Optional, Sequelize, UUIDV4 } from 'sequelize';
 
 export type UserCreationAttributes = Optional<IUser, 'id' | 'email' | 'password'>;
@@ -14,7 +13,7 @@ export class UserModel extends Model<IUser, UserCreationAttributes> implements I
   public phoneNumber: string;
   public firstName: string;
   public lastName: string;
-  public identityNumber: string;
+  public TutisID: string;
   public id: string;
   public email: string;
   public password: string;
@@ -23,11 +22,10 @@ export class UserModel extends Model<IUser, UserCreationAttributes> implements I
   public dob: string;
   public vin: string;
 
-  public async generateIdentityNumber(): Promise<string> {
-    const uid = Math.random().toString(36).slice(2) + randomBytes(8).toString('hex') + new Date().getTime();
-    // get random 8 numbers from uid output
-    const random = uid.substring(2, 10);
-    return random;
+  public async generateTutisID(): Promise<string> {
+    // generate 6 unique numbers that will be used as the TutisID
+    const length = 6;
+    return Math.floor(Math.pow(10, length - 1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)).toString();
   }
 
   public async checkFraudScore(): Promise<number> {
@@ -62,7 +60,7 @@ export default function (sequelize: Sequelize): typeof UserModel {
         allowNull: false,
         type: DataTypes.STRING(45),
       },
-      identityNumber: {
+      TutisID: {
         allowNull: true,
         type: DataTypes.STRING(45),
       },
@@ -115,7 +113,7 @@ export default function (sequelize: Sequelize): typeof UserModel {
       paranoid: true,
       hooks: {
         async beforeCreate(user: UserModel) {
-          user.identityNumber = await user.generateIdentityNumber();
+          user.TutisID = await user.generateTutisID();
         },
       },
     },

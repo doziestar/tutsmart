@@ -6,7 +6,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   dob: string;
-  identityNumber: string;
+  TutisID: string;
   phoneNumber: string;
   password: string;
   refreshToken: TokenData;
@@ -18,7 +18,7 @@ export interface IUser {
   vin: string;
   isActive: boolean;
 
-  generateIdentityNumber?(): Promise<string>;
+  generateTutisID?(): Promise<string>;
   checkFraudScore?(): Promise<number>;
 }
 
